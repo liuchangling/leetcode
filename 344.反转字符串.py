@@ -25,6 +25,6 @@ class Solution:
     def reverseString(self, s: List[str]) -> None:
         s[0::] = s[::-1]
 
-Solution().reverseString(["h", "e", "l", "l", "o"])
+# Solution().reverseString(["h", "e", "l", "l", "o"])
 
 # @lc code=end
