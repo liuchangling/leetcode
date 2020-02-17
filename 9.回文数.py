@@ -8,20 +8,21 @@
 # 方案1 参考第7题，反转比是否相等 速度42.48%
 # 方案2 反转数字后一半，看是否和前一半相等
 # 方案3 同2 不用math库 速度也很神奇 50 -96不等。感觉leetcode服务器也不稳定
+#       方案3有一个提前结束继续判断的定义。 返回判断 //10处理了奇数长度的数字问题，是一个技巧
 
 #import math
 
 # @lc code=start
 
 
-class Solution:
-    def isPalindrome(self, x: int) -> bool:
-        if x < 0:
-            return False
-        if  x == 0: # log10(0) exception
-            return True 
+class Solution:  
 
     # 方案1 参考第7题，反转比是否相等 速度42.48%
+    # def isPalindrome(self, x: int) -> bool:
+    # if x < 0:
+    #         return False
+    #     if  x == 0: # log10(0) exception
+    #         return True 
     #     q = 0
     #     s = x
     #     while s != 0:
@@ -50,6 +51,7 @@ class Solution:
 
 
     # 方案3 注意while结束条件
+    def isPalindrome(self, x: int) -> bool:
         if x < 0 :
             return False
 
