@@ -33,14 +33,41 @@
 # k = 1 的情况 很明显时间复杂度为o(n)
 # 
 
+from typing import List
+import random
+
 # @lc code=start
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        d = nums.s
-        for i in nums:
-            if len(d) < k:
-                d.push(i)
+        def part(left: int, right: int, pivot_index: int):
+            pivot = nums[pivot_index]
+            nums[right], nums[pivot_index] = nums[pivot_index], nums[right]
+            low = left
+            for i in range(left, right):
+                if nums[i] < pivot:
+                    nums[low] , nums[i] = nums[i], nums[low]
+                    low += 1
+            nums[right], nums[low] = nums[low], nums[right]
+            return low
+
+        def select(left: int, right:int, target:int):
+            if left == right:
+                return nums[left]
+
+            # 也可以随机选取 pivot_index = left
+            pivot_index = random.randint(left, right)
             
+            pivot_index = part(left, right, pivot_index)
+            
+            if target == pivot_index:
+                return nums[pivot_index]
+            elif target < pivot_index:
+                return select(left, pivot_index-1, target)
+            else:
+                return select(pivot_index+1, right, target)
         
+        
+        return select(0, len(nums)-1, len(nums) - k)
+
 # @lc code=end
 

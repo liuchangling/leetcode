@@ -78,22 +78,25 @@ class Solution:
         
     #     return nums
 
-    # 插入排序， 每次查到前面数组中合适的位置
-    def sortArray(self, nums: List[int]) -> List[int]: 
-        length = len(nums)
-        for i in range(1, length):
-            t = nums[i]
-            temp = 0
-            for j in reversed(range(0, i)):
-                if nums[j] > t :
-                    nums[j+1] = nums[j]
-                else :
-                    temp = j + 1
-                    break
+    # 插入排序， 每次插到前面数组中合适的位置
+    # def sortArray(self, nums: List[int]) -> List[int]: 
+    #     length = len(nums)
+    #     for i in range(1, length):
+    #         t = nums[i]
+    #         temp = 0
+    #         for j in reversed(range(0, i)):
+    #             if nums[j] > t :
+    #                 nums[j+1] = nums[j]
+    #             else :
+    #                 temp = j + 1
+    #                 break
             
-            nums[temp] = t
+    #         nums[temp] = t
 
-        return nums
+    #     return nums
+
+    # 快速排序
+    # def sortArray(self, nums: List[int]) -> List[int]: 
 
 # print(Solution().sortArray([5,2,3,1]))
 # @lc code=end
