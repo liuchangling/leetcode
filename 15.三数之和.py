@@ -180,12 +180,5 @@ class Solution:
 #print(Solution().threeSum([-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]))
 
 # 超时的测试包含3000个数,方法1要75s，方法2 0.7s
-# with open('./test/15.txt', 'rt') as in_file:
-#     text = in_file.read()
-
-# a = text.split(',')
-# a = [int(i) for i in a]
-# print(a)
-# print(Solution().threeSum(a))
 
 # @lc code=end
