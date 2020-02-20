@@ -34,6 +34,7 @@
 # 思路2 如果想额外空间为O(1) 我们需要让指针从后向前遍历
 # 
 # 代码优化，使用切片完成最后一步拷贝数组 不过两者都是8%的速度。。。很神奇啊最近咋都这么慢
+# 思路3  合并后排序  理论上时间复杂度是O(nlgn) 会大于前两种
 
 # @lc code=start
 class Solution:
@@ -84,6 +85,11 @@ class Solution:
 
         return nums1
 
+    # 思路3 排序
+    # def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:    
+    #     nums1[m:] = nums2
+    #     nums1.sort()
+    #     return nums1
             
 # @lc code=end
 
