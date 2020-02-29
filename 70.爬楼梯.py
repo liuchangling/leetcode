@@ -47,7 +47,11 @@
 # 思路2 斐波那契数 和思路1差不多，不过将借用的空间缩小，仅用2个变量保存 速度依然8%
 
 # 思路3 Binets 方法 这是一个时间复杂度为lgn的计算方法
-#      原理是f(n) = [[1,1], [1,0]]^n
+#      原理是q = [[1,1], [1,0]] ; f(n) = q^n 
+#      计算时采用如果二进制尾数为1 则乘以q。 无论尾数如何都可以右移一位直到n小于0
+#      这个代码其实有点绕 速度在8%左右
+
+# 思路4 斐波那契公式 直接看代码吧，给数学家跪下了 速度在30%
 
 # @lc code=start
 class Solution:
@@ -83,34 +87,39 @@ class Solution:
         
     #     return second
 
+    # 思路3 矩阵乘法
+    # def climbStairs(self, n: int) -> int:
+    #     q = [[1,1], [1,0]]
+    #     p = self.pow(q, n)
+    #     return p[0][0]
+
+    # def pow(self, a, n):
+    #     ret = [[1,0], [0,1]] # 默认是一个单位矩阵
+    #     while n > 0:
+    #         if ( n & 1 ) == 1:
+    #             ret = self.multipy(a, ret)
+            
+    #         # 对于1001(9)来说 为 4*4*1 所以可以先乘q 在求右移一位后的平方
+    #         n = n >> 1
+    #         a = self.multipy(a, a)
+               
+        
+    #     return ret
+
+    # def multipy(self, a, b):
+    #     c = [[0,0], [0,0]]
+        
+    #     for i in range(0,2):
+    #         for j in range(0,2):
+    #             c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j]
+
+    #     return c 
+
     def climbStairs(self, n: int) -> int:
-        q = [[1,1], [1,0]]
-        p = self.pow(q, n)
-        return p[0][0]
+        s5 = 5 ** 0.5
+        return int(1 / s5 * ( ((1+s5)/2)**(n+1) - ((1-s5)/2)**(n+1) ))
 
-    def pow(self, a, n):
-        q = [[1,1], [1,0]]
-        while n > 0:
-            if ( n & 1 )== 1:
-                ret = self.multipy(a, q)
-            else :
-                a = self.multipy(a, a)
-                n = n >> 1
-        
-        return ret
-
-    def multipy(self, a, b):
-        c = [[0,0], [0,0]]
-        
-        for i in range(0,2):
-            for j in range(0,2):
-                c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j]
-
-        return c 
-
-print(Solution().climbStairs(2))
-
-
+# print(Solution().climbStairs(2))
 
 # @lc code=end
 
