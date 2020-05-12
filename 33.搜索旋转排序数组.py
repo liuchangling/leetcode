@@ -43,9 +43,47 @@
 # from typing import List
 # @lc code=start
 class Solution:
-    def search(self, nums: List[int], target: int) -> int:
-        # return nums.index(target) if (target in nums) else -1
+    # def search(self, nums: List[int], target: int) -> int:
+    #     # return nums.index(target) if (target in nums) else -1
 
+    #     l = 0
+    #     h = len(nums) - 1
+
+    #     while l <= h :
+    #         mid = (l + h) // 2
+
+    #         x = nums[mid]
+    #         if target == x:
+    #             return mid
+    #         elif target < x: 
+    #             if nums[l] <= x:
+    #                 # 左有序
+    #                 if nums[l] == target:
+    #                     return l
+    #                 elif nums[l] < target:
+    #                     h = mid - 1
+    #                 else:
+    #                     l = mid + 1                
+    #             else:
+    #                 # 右有序
+    #                 h = mid - 1
+    #         else :
+    #             # target > x
+    #             if nums[l] <= x:
+    #                 # 左有序
+    #                 l = mid + 1
+    #             else:
+    #                 # 右有序
+    #                 if nums[h] == target:
+    #                     return h
+    #                 elif nums[h] > target:
+    #                     l = mid + 1
+    #                 else :
+    #                     h = mid - 1
+        
+    #     return -1
+
+    def search(self, nums: List[int], target: int) -> bool:
         l = 0
         h = len(nums) - 1
 
@@ -53,33 +91,26 @@ class Solution:
             mid = (l + h) // 2
 
             x = nums[mid]
+
             if target == x:
                 return mid
+            elif nums[l] == target:
+                return l
+            elif nums[h] == target:
+                return h
             elif target < x: 
-                if nums[l] <= x:
-                    # 左有序
-                    if nums[l] == target:
-                        return l
-                    elif nums[l] < target:
-                        h = mid - 1
-                    else:
-                        l = mid + 1                
+                if nums[l] <= x and nums[l] > target:
+                    # 左有序 且左侧最小值比target大，那就在右边找
+                    l = mid + 1
                 else:
-                    # 右有序
                     h = mid - 1
             else :
                 # target > x
-                if nums[l] <= x:
-                    # 左有序
-                    l = mid + 1
+                if nums[h] >= x and nums[h] < target:
+                    # 右有序 且右侧最大值比target小，那就在左边找
+                    h = mid - 1
                 else:
-                    # 右有序
-                    if nums[h] == target:
-                        return h
-                    elif nums[h] > target:
-                        l = mid + 1
-                    else :
-                        h = mid - 1
+                    l = mid + 1
         
         return -1
 
