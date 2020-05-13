@@ -86,7 +86,7 @@ class Solution:
     #             # 仅左有序
     #             l = mid + 1
     
-     def findMin(self, nums: List[int]) -> int:
+    def findMin(self, nums: List[int]) -> int:
         l = 0
         h = len(nums) - 1
         while l < h :
