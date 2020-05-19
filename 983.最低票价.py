@@ -77,8 +77,7 @@
 # @lc code=start
 class Solution:
     def mincostTickets(self, days: List[int], costs: List[int]) -> int:
-        c = []
-        c.append(0)
+        c = [0]
 
         for d in range(1,days[-1]+1) :
             if d in days:
