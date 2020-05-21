@@ -60,5 +60,5 @@ class Solution:
         return maxStr
 
 
-print(Solution().longestPalindrome('aaa'))
+# print(Solution().longestPalindrome('aaa'))
 # @lc code=end
