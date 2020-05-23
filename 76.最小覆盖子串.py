@@ -46,40 +46,76 @@
 # }
 
 
-#  
+#  思路2 优化了存储。 mem同时也会将无需计数的字符统计进去，之后通过正负来搞定。省去了很多not in和in的代码
+#        另外用了两个int来处理ans ，而非反复对字符串切片
 
 # @lc code=start
 class Solution:
+    # def minWindow(self, s: str, t: str) -> str:
+    #     import collections
+    #     need = collections.Counter(t) # 记录t中每个字符有多少次
+        
+    #     l = meets = 0
+    #     ans = ''
+        
+    #     for r, char in enumerate(s):
+    #         if char not in need:
+    #             continue
+            
+    #         need[char] -= 1
+    #         if need[char] == 0:
+    #             meets += 1 # 该字符已经满足需求
+
+            
+    #         while s[l] not in need or need[s[l]] < 0:
+    #             # 左侧字符如果可以移除，就让l++ 并更新相应的needs
+    #             if  s[l] in need:
+    #                 need[s[l]] += 1
+
+    #             l += 1
+
+
+    #         if meets == len(need):
+    #             # 更新ans if necessary
+    #             if not ans or len(ans) > r - l + 1:
+    #                 ans = s[l: r + 1]
+
+            
+    #     return ans
+
+
+    # 优化后
     def minWindow(self, s: str, t: str) -> str:
-        import collections
-        need = collections.Counter(t) # 记录t中每个字符有多少次
+        from collections import defaultdict
+        mem = defaultdict(int)
+        for char in t:
+            mem[char] += 1
+
+        print(mem)
         
-        l = meets = 0
-        ans = ''
+
+        t_len = len(t) # 记录有多少个尚未满足
+        left = 0
         
-        for r, char in enumerate(s):
-            if char not in need:
-                continue
-            
-            need[char] -= 1
-            if need[char] == 0:
-                meets += 1 # 该字符已经满足需求
+        # 取消了频繁字符串切片的过程 使用int处理
+        minLeft = 0
+        minRight = len(s)
+        
+        for right, char in enumerate(s):
+            if mem[char] > 0:
+                t_len -= 1 # 找到必须的char之后 tlen标记-1
 
-            
-            while s[l] not in need or need[s[l]] < 0:
-                # 左侧字符如果可以移除，就让l++ 并更新相应的needs
-                if  s[l] in need:
-                    need[s[l]] += 1
+            mem[char] -= 1 # 这里会把之前无需处理的字符也放进去，从0变成负数, 取消了很多in和not in的判断。很妙
+            if t_len == 0: 
+                #当前窗口已满足条件
+                while mem[s[left]] < 0: # 左侧为为非必须时
+                    mem[s[left]] += 1 # 更新mem
+                    left += 1 # 左边收紧
+                if right-left < minRight-minLeft:
+                    minLeft, minRight = left, right
+                mem[s[left]] += 1
+                t_len += 1
+                left += 1
 
-                l += 1
-
-
-            if meets == len(need):
-                # 更新ans if necessary
-                if not ans or len(ans) > r - l + 1:
-                    ans = s[l: r + 1]
-
-            
-        return ans
-
+        return '' if minRight==len(s) else s[minLeft:minRight+1]
 # @lc code=end
