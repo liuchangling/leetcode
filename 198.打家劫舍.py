@@ -38,7 +38,7 @@
 # 思路2 对于思路1的空间优化
 # 思路1 保存了整个dp数组，实际上只需要保存2个数即可
 
-# 思路3 代码风格极简的思路2 96%
+# 思路3 代码风格极简的思路2 98%
 
 # @lc code=start
 class Solution:
@@ -73,7 +73,7 @@ class Solution:
     #     return second
 
     def rob(self, nums: List[int]) -> int:
-        cur = pre = 0 
+        cur , pre = 0 , 0
         for n in nums:
             cur , pre = max(pre+n, cur), cur
 
