@@ -38,23 +38,25 @@
 # 思路2 对于思路1的空间优化
 # 思路1 保存了整个dp数组，实际上只需要保存2个数即可
 
+# 思路3 代码风格极简的思路2 96%
+
 # @lc code=start
 class Solution:
-    def rob(self, nums: List[int]) -> int:
-        # dp[i] = max (dp[i-2] + nums[i], dp[i-1])
-        if len(nums) == 0:
-            return 0
-        if len(nums) <= 2:
-            return max(nums)
-        dp = []
-        dp.append(nums[0])
-        dp.append(max(nums[0], nums[1]))
+    # def rob(self, nums: List[int]) -> int:
+    #     # dp[i] = max (dp[i-2] + nums[i], dp[i-1])
+    #     if len(nums) == 0:
+    #         return 0
+    #     if len(nums) <= 2:
+    #         return max(nums)
+    #     dp = []
+    #     dp.append(nums[0])
+    #     dp.append(max(nums[0], nums[1]))
 
-        for i in range(2, len(nums)):
-            dp.append(max(dp[i-2] + nums[i], dp[i-1] ))
+    #     for i in range(2, len(nums)):
+    #         dp.append(max(dp[i-2] + nums[i], dp[i-1] ))
 
-        # print(dp)
-        return dp[-1]
+    #     # print(dp)
+    #     return dp[-1]
 
     # 不保存整个数组，
     # def rob(self, nums: List[int]) -> int:
@@ -69,6 +71,13 @@ class Solution:
     #         first, second = second, max(first + nums[i], second)
         
     #     return second
+
+    def rob(self, nums: List[int]) -> int:
+        cur = pre = 0 
+        for n in nums:
+            cur , pre = max(pre+n, cur), cur
+
+        return cur
 
 # @lc code=end
 
