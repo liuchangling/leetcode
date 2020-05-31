@@ -37,7 +37,9 @@
 # 定义 a = [a1, a2,…, an] 和 b = [b1, b2,…, bn] 的点积为：
 # a'b = a1b1+a2b2+...anbn
 
-# dp
+# 思路肯定是dp
+# 对于dp的定义可以分为以ij为结尾和截止目前为止两种。思路区别不大
+# 以ij为结尾的思路需要额外的一个ans作为变量进行比较
 
 
 class Solution:
@@ -56,7 +58,7 @@ class Solution:
             for j in range(1, l2): 
                 # print(nums1[i-1], nums2[j-1])
 
-                # 这个状态转移方程比较复杂，细品，如果同时
+                # 这个状态转移方程比较复杂，细品
                 dp[i][j] = max(dp[i - 1][j - 1] + nums1[i - 1] * nums2[j - 1],  
                                nums1[i - 1] * nums2[j - 1],
                                dp[i][j - 1], 
