@@ -28,10 +28,35 @@
 # ⁠ [3,2,1]
 # ]
 # 
-#
+# dfs + 回溯算法 + 递归 很高级的思想，代码很简单
+# 时间复杂度为 O(n * n!)O(n∗n!)
+# 空间复杂度：O(n)
+
+
 
 # @lc code=start
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
+        first = 0 
+        res = []
+        size = len(nums)
+
+        def back_track(first):
+            if first == size :
+                res.append(nums[:])
+            
+            for i in range(first, size):
+                # 0~first为已使用， first~size-1为未使用
+                # 动态维护数组
+                nums[i] , nums[first] = nums[first], nums[i]
+                # 继续递归填下一个数
+                back_track(first + 1)
+                # 撤销操作
+                nums[i] , nums[first] = nums[first], nums[i]
+
+        back_track(first)
+        return res
+
+
 # @lc code=end
 
