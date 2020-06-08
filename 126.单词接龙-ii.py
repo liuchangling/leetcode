@@ -154,4 +154,4 @@ class Solution:
         return []
 # @lc code=end
 
-print(Solution().findLadders("red", "tax", ["ted","tex","red","tax","tad","den","rex","pee"]))
+# print(Solution().findLadders("red", "tax", ["ted","tex","red","tax","tad","den","rex","pee"]))
