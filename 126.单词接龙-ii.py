@@ -61,5 +61,62 @@
 # @lc code=start
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+        if endWord not in wordList or not endWord or not beginWord or not wordList:
+            return 0
+
+        dictory = defaultdict(list)
+        L = len(beginWord)
+
+        # 准备过程  将字典中其中一位用*代替，建立map    
+        for word in wordList:
+            for i in range(L):
+                dictory[word[:i] + '*' + word[i+1:]].append(word)
+                
+        queue_begin = [(beginWord, [[beginWord]])]        
+        queue_end = [(endWord, [[endWord]])]
+
+        # 这次value定义为到目前节点位置所有可能的路径，是个二维矩阵
+        visited_begin = {beginWord: [[beginWord]]}
+        visited_end = {endWord: [[endWord]]}
+
+        ans = [] # 记录路径
+
+        def visitWordNode(q, v1, v2, dir): # v1 当前遍历的已访问数组， v2另一端已访问的数组
+            current_word, paths = q.pop(0)            
+
+            for i in range(L):
+                tmp = current_word[:i] + "*" + current_word[i+1:]
+
+                for word in dictory[tmp]:
+                    # 如果能相遇，直接添加path
+                    if word in v2:
+                        for p1 in paths:
+                            for p2 in v2[word]:
+                                if dir:
+                                    ans.append(p1 + p2)
+                                else :
+                                    ans.append(p2 + p1)
+
+                                print(ans, word, q)
+                    if word not in v1:
+                        # 这段逻辑是没有变的
+                        t = []
+                        for p in paths:
+                            if dir:
+                                t.append(p+[word])
+                            else:
+                                t.append([word]+p)
+                        v1[word] = t
+                        q.append((word, t))
+            return None
+
+        while len(ans) == 0:
+            # 从头向后一次
+            visitWordNode(queue_begin, visited_begin, visited_end, True)
+
+            # 从尾向前一次
+            visitWordNode(queue_end, visited_end, visited_begin, False)
+
+        return ans
 # @lc code=end
 
