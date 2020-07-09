@@ -26,15 +26,15 @@
 # 
 # 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
 # 
-# 思路1 贪心算法每一步都选择最佳方案。到最后就是全局最优
-#       cur 记录当前元素下最大值
-#       sum 记录全局最大值  打败8%。。。
+# 思路1 dp 48ms 76%
+# pre 就是dp[i-1] cur 就是dp[i]
+# dp[i] = max(dp[i-1] + nums[i], nums[i]) 用pre处理dp
+# ans更新答案
+# 时间复杂度o(n)
 
-# 思路2 动态规划， 就是所谓的 f(n) = f(n-1)+ n
-#       这里处理的方式是修改元素组，每个位置代表着前面n位的最大子序和 打败了6%
 
 
-# 思路3 分治法，前俩是O(n)的  这个是O(nlogn)的，只是为了体验一下不同思路而已
+# 思路2 分治法 时间复杂度O(n) 因为有额外空间 这题不如思路1
 #       分治法的套路分为三步： 1. 定义基本情况 2. 将问题分解为子问题，并递归解决他们 3.合并子问题的解已获得原始问题的解。
 # 这个算法比较复杂。 而且cross_num的定义有点绕。思路是要么在左半边，要么在右半边，要么穿过中间元素横跨两边
 # 实际运行后超时。。。
@@ -45,32 +45,23 @@
 # right_sum 为最大子数组的右子数组，为最后 n/2 的元素。
 # cross_sum 是包含左右子数组且含索引 (left + right) / 2 的最大值。
 
+# 引进了一个线段树的概念，在这个题里面发挥不太好但是这个数据结构能解决很多问题。
+
 
 # @lc code=start
 class Solution:
-    # 思路1 贪心算法 
+    # 思路1 动态规划
     def maxSubArray(self, nums: List[int]) -> int:
-        sum = nums[0]
-        cur = nums[0]
-        for i in range(1, len(nums)):
-            cur = max(nums[i], cur+nums[i])
-            sum = max(sum, cur)
-
-        return sum
-
-    # 思路2 动态规划
-    # def maxSubArray(self, nums: List[int]) -> int:
-    #     sum = nums[0]
-    #     for i in range(1, len(nums)):
-    #         if nums[i-1] > 0 :
-    #             nums[i] += nums[i-1]
-            
-    #         sum = max(sum, nums[i])
-
-    #     return sum
+        pre = 0 
+        ans = nums[0] 
+        for n in nums:            
+            pre = max(n, pre + n)
+            ans = max(pre, cur)
+        
+        return ans
 
 
-    # # 思路3 分治法 会测试超时
+    # # 思路2 分治法 会测试超时
     # def cross_sum(self, nums, left, right, p):
     #     if left == right:
     #         return nums[left]
