@@ -78,7 +78,7 @@
 # p[j-1]遇到一个非*的字符  dp[i][j] = d[i-1][j-1] if s[i-1] match p[j-1] else False
 # p[j-1]遇到* 有两种情况,看下能否选用p[j-2~j-1]两个通配符
 #       情况1 如果s[i-1] match p[j-2] 那么 dp[i][j] = dp[i-1][j] or dp[i][j-2]
-#       情况2 如果s[i-1] match p[j-2] 那么 dp[i][j] = dp[i][j-2] 即不可以用p[j-1~j-2]
+#       情况2 如果s[i-1] not match p[j-2] 那么 dp[i][j] = dp[i][j-2] 即不可以用p[j-1~j-2]
 
 # 细节注意 
 # j需要从1遍历到n+1 而非从0开始

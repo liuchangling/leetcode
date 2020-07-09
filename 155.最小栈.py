@@ -57,7 +57,6 @@
 # 弹出时，如果弹出了最小值，就pop一下，否则small不变
 
 # @lc code=start
-import heapq
 class MinStack:
 
     def __init__(self):
