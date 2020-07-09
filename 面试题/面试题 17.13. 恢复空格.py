@@ -29,49 +29,74 @@
 
 # 思路2 dp优化 1100ms 26%
 # 直觉想法中有过多的比较次数
-
 # 我们可以直接使用dictionary的词去匹配sentence,即判断
 # for word in dictionary : if sentence[i-len(word):i]  == word
 
+# 思路3  dp极限优化版用了记忆dfs的思想 68ms 99%
+# 大佬就是大佬，看完我裂开了
+# 先抹去了不存在的字典中的词，然后通过lrucache的递归将效率提高的很高
+# 先计算了所有word可能的长度k，直接dp[i] = min[dp[i+k]+check(sentence(i:i+k))]
+# 同时还用了dp的内存优化。酷炫的不行 i了i了
+# 注意这次其实是逆序从尾到头进行dp的或者可以说类似dfs
+
+# 思路4  对于查询字符串是否在字典中有个很棒的数据结构，叫字典树
+#    常用于搜索。也叫前缀树。和hash相比的好处是，用户输入的时候，输入前几个字符也能找到对应的匹配可能性，
+#    而hash必须全部输入完，才能进行match
 
 class Solution:
-    def respace(self, dictionary: List[str], sentence: str) -> int:
-        dictionary = set(dictionary)
-        n = 0
-        for word in dictionary:
-            n = max(n, len(word))
+    # def respace(self, dictionary: List[str], sentence: str) -> int:
+    #     dictionary = set(dictionary)
+    #     n = 0
+    #     for word in dictionary:
+    #         n = max(n, len(word))
         
-        size = len(sentence) + 1
+    #     size = len(sentence) + 1
 
-        dp = list(range(size))
+    #     dp = list(range(size))
 
-        def check(s):
-            return 0 if s in dictionary else len(s)
-
-
-        for i in range(1, size):
-            k = 0 
-            while k <= i and k <= n:
-                dp[i] = min(dp[i], dp[i-k] + check(sentence[i-k:i]) )
-                k += 1
-        # print(dp)
-        return dp[-1]
+    #     def check(s):
+    #         return 0 if s in dictionary else len(s)
 
 
-    # dp优化，状态转移方程的优化
+    #     for i in range(1, size):
+    #         k = 0 
+    #         while k <= i and k <= n:
+    #             dp[i] = min(dp[i], dp[i-k] + check(sentence[i-k:i]) )
+    #             k += 1
+    #     # print(dp)
+    #     return dp[-1]
+
+
+    # dp优化，状态转移方程的优化 
+    # def respace(self, dictionary: List[str], sentence: str) -> int:
+    #     dictionary = set(dictionary)
+
+    #     size = len(sentence) + 1
+
+    #     dp = [0] * size
+
+    #     for i in range(1, size):
+    #         dp[i] = dp[i-1] + 1 
+    #         for word in dictionary:
+    #             k = len(word)
+    #             if i >= k :
+    #                 t = dp[i-k] if sentence[i-k:i] == word else dp[i-k]+k
+    #                 dp[i] = min(dp[i], t)
+
+    #     return dp[-1]
+
+    # 思路3  大佬dp 68ms 99%
     def respace(self, dictionary: List[str], sentence: str) -> int:
-        dictionary = set(dictionary)
+        dictionary = set([w for w in dictionary if sentence.find(w)!=-1])
+        lens = list({len(w) for w in dictionary})
+        lens.sort(reverse = True)
+        N, res, i = len(sentence), 0, 0
+        @functools.lru_cache(maxsize=1000)
+        def sol(i) : # 递归
+            if i >= N : return 0
+            tails = []
+            tails = [sol(i+l) for l in lens if i+l <= N and sentence[i:i+l] in dictionary]
+            tails += [1+sol(i+1)]
+            return (min(tails) if tails else 0)
 
-        size = len(sentence) + 1
-
-        dp = [0] * size
-
-        for i in range(1, size):
-            dp[i] = dp[i-1] + 1 
-            for word in dictionary:
-                k = len(word)
-                if i >= k :
-                    t = dp[i-k] if sentence[i-k:i] == word else dp[i-k]+k
-                    dp[i] = min(dp[i], t)
-
-        return dp[-1]
+        return sol(0)
