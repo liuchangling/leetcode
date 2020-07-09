@@ -42,6 +42,9 @@
 # 思路4  对于查询字符串是否在字典中有个很棒的数据结构，叫字典树
 #    常用于搜索。也叫前缀树。和hash相比的好处是，用户输入的时候，输入前几个字符也能找到对应的匹配可能性，
 #    而hash必须全部输入完，才能进行match
+#    字典树的实现在"前缀树.py"中
+
+from typing import List
 
 class Solution:
     # def respace(self, dictionary: List[str], sentence: str) -> int:
@@ -86,17 +89,107 @@ class Solution:
     #     return dp[-1]
 
     # 思路3  大佬dp 68ms 99%
-    def respace(self, dictionary: List[str], sentence: str) -> int:
-        dictionary = set([w for w in dictionary if sentence.find(w)!=-1])
-        lens = list({len(w) for w in dictionary})
-        lens.sort(reverse = True)
-        N, res, i = len(sentence), 0, 0
-        @functools.lru_cache(maxsize=1000)
-        def sol(i) : # 递归
-            if i >= N : return 0
-            tails = []
-            tails = [sol(i+l) for l in lens if i+l <= N and sentence[i:i+l] in dictionary]
-            tails += [1+sol(i+1)]
-            return (min(tails) if tails else 0)
+    # def respace(self, dictionary: List[str], sentence: str) -> int:
+    #     dictionary = set([w for w in dictionary if sentence.find(w)!=-1])
+    #     lens = list({len(w) for w in dictionary})
+    #     lens.sort(reverse = True)
+    #     N, res, i = len(sentence), 0, 0
+    #     @functools.lru_cache(maxsize=1000)
+    #     def sol(i) : # 递归
+    #         if i >= N : return 0
+    #         tails = []
+    #         tails = [sol(i+l) for l in lens if i+l <= N and sentence[i:i+l] in dictionary]
+    #         tails += [1+sol(i+1)]
+    #         return (min(tails) if tails else 0)
 
-        return sol(0)
+    #     return sol(0)
+
+    # 思路4 字典树 5384 ms 7.6%
+    # def respace(self, dictionary: List[str], sentence: str) -> int:
+    #     root = Trie()
+    #     root.insert_all(dictionary)
+
+    #     size = len(sentence) + 1
+    #     dp = [0] * size
+
+    #     n = 0
+    #     for word in dictionary:
+    #         n = max(n, len(word))
+
+    #     for i in range(1, size):
+    #         dp[i] = dp[i-1] + 1 
+            
+    #         for j in range(i-1, max(-1, i-n-1), -1):
+    #             # 这种写法依然有重复比较
+    #             if root.search(sentence[j:i]):
+    #                 dp[i] = min(dp[i],dp[j])
+    #             # 这里可以加入字典中单词最大值最小值，加速跳过                    
+                
+        
+    #     return dp[-1]
+
+    # 思路5 字典树 564 ms 70.97%
+    def respace(self, dictionary: List[str], sentence: str) -> int:
+        root = Trie()
+        root.insert_all(dictionary)
+
+        size = len(sentence) + 1
+        dp = [0] * size
+
+        for i in range(1, size):
+            dp[i] = dp[i-1] + 1 
+            
+            pointer = root
+            # 这里其实是改版的search 插入了dp更新的代码
+            for j in range(i, -1, -1):
+                ch = sentence[j-1]
+                c = ord(ch) - ord('a')
+                if pointer.isEnd:
+                    dp[i] = min(dp[i], dp[j])
+                
+                if c not in pointer.children:
+                    break
+                pointer = pointer.children[c]
+        
+        return dp[-1]
+
+    
+
+
+
+class Trie:
+    def __init__(self):
+        self.children = {}
+        self.isEnd = False
+
+    def insert(self, word:str):
+        # 这里逆序插入
+        p = self
+        for ch in word[::-1]:
+            c = ord(ch) - ord('a')
+            print(c)
+            if c not in p.children :
+                p.children[c] = Trie()
+            p = p.children[c]
+
+        p.isEnd = True
+
+    def insert_all(self, words:List[str]):
+        for word in words:
+            self.insert(word)
+
+    def search(self, word:str):
+        s = word[::-1] # 逆序查找
+        p = self
+        for ch in s:
+            c = ord(ch) - ord('a')
+            if c not in p.children:
+                return False
+            p = p.children[c]
+
+        return p.isEnd
+
+
+
+# print(Solution().respace(["looked","just","like","her","brother"] , "jesslookedjustliketimherbrother"))
+Solution().respace(["a"] , "aa")
