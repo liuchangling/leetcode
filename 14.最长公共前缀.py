@@ -133,6 +133,33 @@ class Solution:
     #     return s
 
 
+# js version
+# var longestCommonPrefix = function(strs) {
+#     let minLen = Math.min(...strs.map(i=>i.length))
+#     let zip = new Array(minLen)
+#     const s = strs[0]
+
+#     strs.forEach(str=>{
+#         for(let i = 0; i<minLen; i++){
+#             if(!zip[i]){
+#                 zip[i] = new Set()
+#             }
+#             zip[i].add(str[i])
+#         }
+#     })
+
+#     let ret = ''
+#     for(let i = 0; i<minLen; i++){
+#         if(zip[i].size === 1){
+#             ret += s[i]
+#         }else{
+#             return ret
+#         }
+#     }
+#     return ret
+
+# };
+
 
 #print(Solution().longestCommonPrefix(["flower","flow","flight"]))
 

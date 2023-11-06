@@ -60,3 +60,49 @@ class Solution:
 
 # @lc code=end
 
+
+
+# js 版本直接递归
+# var permute = function (nums) {
+#   if (nums.length === 1) return [nums]
+
+#   let ret = []
+
+#   nums.forEach((num, index) => {
+#     let temp = nums.slice()
+#     temp.splice(index, 1)
+#     ret = ret.concat(permute(temp).map(i => [num].concat(i)))
+#   })
+
+#   return ret
+# };
+
+
+# js 回溯递归
+# /**
+#  * @param {number[]} nums
+#  * @return {number[][]}
+#  */
+# var permute = function (nums) {
+#   let ret = []
+#   const len = nums.length
+
+#   function back_track(first){
+#     if(first === len){
+#       ret.push(nums.slice())
+#     }
+
+#     for(let i = first; i < len; i++){
+#       let ibak = nums[i]
+#       let firstbak = nums[first]
+#       nums[first] = ibak
+#       nums[i] = firstbak
+#       back_track(first+1)
+#       nums[first] = firstbak
+#       nums[i] = ibak
+#     }
+#   }
+
+#   back_track(0)
+#   return ret
+# };

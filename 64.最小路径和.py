@@ -32,6 +32,7 @@
 # 简单dp 56 ms 82.28%
 # 空间优化方向： 不需要用额外的 dp 数组，而是在原数组上存储，这样就不需要额外的存储空间。这里没有用
 # 因为个人不太喜欢改变原始数据的值
+# 上面当初年轻了， 其实可以值维护一列 或者一行就可以实现
 
 # @lc code=start
 class Solution:
@@ -59,3 +60,31 @@ class Solution:
         return dp[-1][-1]
 # @lc code=end
 
+# /**
+#  * @param {number[][]} grid
+#  * @return {number}
+#  */
+# var minPathSum = function(grid) {
+#     // dp[i][j] 定位为 到达i,j处 最小路径和
+#     // dp[0][0] = grid[0][0]
+#     // dp[i][j] = min(dp[i-1][j] , dp[i][j-1]) + grid[i][j]
+
+#     const m = grid.length
+#     const n = grid[0].length
+
+#     let dp = new Array(m).fill(new Array(n))
+#     dp[0][0] = grid[0][0]
+
+#     for(let i = 0; i<m; i++){
+#         for(let j = 0; j<n; j++){
+#             let temp = []
+#             if(i>0) temp.push(dp[i-1][j])
+#             if(j>0) temp.push(dp[i][j-1])
+
+#             let min = temp.length>0? Math.min(...temp): 0
+#             dp[i][j] = grid[i][j] + min
+#         }
+#     }
+
+#     return dp[m-1][n-1]
+# };

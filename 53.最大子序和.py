@@ -96,3 +96,18 @@ class Solution:
 
 # @lc code=end
 
+# js dp动态规划 31%
+# dp[i] 定义为 以i结尾的最长子串 
+# dp[0] = nums[0]
+# 假设已知dp[i-1]  那么 dp[i] = max(nums[i], dp[i-1]+nums[i])
+# 用ret标记答案
+# var maxSubArray = function(nums) {
+#    let ret = nums[0]
+#    let pre = nums[0]
+#    for(let i = 1; i<nums.length; i++){
+#        let next = Math.max(nums[i], pre+nums[i])
+#        ret = Math.max(next, ret)
+#        pre = next
+#    }
+#    return ret
+# };
