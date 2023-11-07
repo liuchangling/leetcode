@@ -28,3 +28,20 @@ class Solution:
         
 # @lc code=end
 
+# var removeDuplicates = function(nums) {
+#   let lastIndex = 1
+#   let count = 1
+#   for (let i = 1; i < nums.length; i++) {
+#     if (nums[i] === nums[i - 1]) {
+#       count++
+#     } else {
+#       count = 1
+#     }
+
+#     if (count <= 2) {
+#       nums[lastIndex++] = nums[i]
+#     }
+#   }
+
+#   return lastIndex
+# }
