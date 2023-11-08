@@ -63,3 +63,13 @@ class Solution:
 
 # @lc code=end
 
+# var numTrees = function(n) {
+# 	let g = [1]
+# 	for(let i = 1; i <= n ; i++){
+# 		g[i] = 0
+# 		for(let j = 0; j < i; j++){
+# 			g[i] += g[j]*g[i-j-1]
+# 		}
+# 	}
+# 	return g[n]
+# };

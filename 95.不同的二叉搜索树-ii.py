@@ -90,3 +90,29 @@ class Solution:
         
 # @lc code=end
 
+# var generateTrees = function (n) {
+#     // if(n<1) return []
+
+#     // 从 start 到end的树
+#     function createTree(start, end) {
+#         if(start> end) return [null]
+#         let temp = []
+
+#         for (let i = start; i <= end; i++) {
+#             const left = createTree(start, i - 1)
+#             const right = createTree(i + 1, end)
+
+#             left.forEach(l => {
+#                 right.forEach(r => {
+#                    let node = new TreeNode(i)
+#                    node.left = l
+#                    node.right = r
+#                    temp.push(node)
+#                 })
+#             })
+#         }
+#         return temp
+#     }
+
+#     return createTree(1, n)
+# };
