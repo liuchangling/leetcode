@@ -85,3 +85,46 @@ class Solution:
 
 # print(Solution().subsetsWithDup([1,2,2]))
 
+
+# /**
+#  * @param {number[]} nums
+#  * @return {number[][]}
+#  */
+
+# var subsetsWithDup = function(nums) {    
+#     nums.sort() // 90题先排序可以去掉一些遍历
+#     let ret = []
+#     function back_track(path, choices){
+
+#         // if valid, add path to result
+#         ret.push(path)
+
+#         // search all choices
+#         choices.forEach((choice, index) => {
+
+#             // 90题需要的防重处理
+#             if(index>0 && choice === choices[index -1]){
+#                 return                
+#             }
+         
+#             // make 1 choice . remove this choice
+#             // 全排列 
+#             // let temp = choices.slice(0, index).concat(choices.slice(index+1))
+#             // 不重复子集
+#             let temp = choices.slice(index+1)
+
+#             // update path
+#             let makeChoice = path.concat([choice])
+          
+        
+#             // backtrack after make choice
+#             back_track(makeChoice, temp)
+#             // revert choice
+#             // 回退 js的concat不修改原数组，所以这一步不用写了            
+#         });
+#     }
+
+#     back_track([], nums)
+#     return ret
+# };
+

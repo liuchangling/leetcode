@@ -153,3 +153,35 @@ class Solution:
 # @lc code=end
 
 # print(Solution().subsets([1,2,3]))
+# /**
+#  * @param {number[]} nums
+#  * @return {number[][]}
+#  */
+# var subsets = function(nums) {
+#     let ret = []
+#     function back_track(path, choices){
+
+#         // if valid, add path to result
+#         ret.push(path)
+
+#         // search all choices
+#         choices.forEach((choice, index) => {
+#             // make 1 choice . remove this choice
+             
+#             // 全排列 
+#             // let temp = choices.slice(0, index).concat(choices.slice(index+1))
+#             // 不重复子集  可以通过78题
+#             let temp = choices.slice(index+1)
+
+#             // update path
+#             let makeChoice = path.concat([choice])
+#             // backtrack after make choice
+#             back_track(makeChoice, temp)
+#             // revert choice
+#             // 回退 js的concat不修改原数组，所以这一步不用写了            
+#         });
+#     }
+
+#     back_track([], nums)
+#     return ret
+# };
