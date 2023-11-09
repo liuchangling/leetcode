@@ -97,3 +97,26 @@ class Solution:
 
 
 
+# var pathSum = function (root, targetSum) {
+#     let ret = []
+
+#     function dfs(node, currentSum, path) {
+#         if (!node) return false
+#         currentSum += node.val
+#         let newPath = path.concat(node.val)
+
+#         if (!node.left && !node.right) {
+#             if (currentSum === targetSum) {
+#                 ret.push(newPath)
+#             }
+#         } else {
+#             dfs(node.left, currentSum, newPath)
+#             dfs(node.right, currentSum, newPath)
+#         }
+#     }
+
+
+#     dfs(root, 0, [])
+#     return ret
+
+# };

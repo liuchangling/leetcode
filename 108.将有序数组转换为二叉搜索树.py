@@ -84,3 +84,20 @@ class Solution:
         return p
 # @lc code=end
 
+
+
+# var sortedArrayToBST = function(nums) {
+
+#     function buildTree(low, high){
+#         if(low>high) return null
+
+#         let mid = Math.floor((low + high)/2)
+#         let root = new TreeNode(nums[mid])
+#         root.left = buildTree(low, mid-1)
+#         root.right = buildTree(mid+1, high)
+        
+#         return root
+#     }
+
+#     return buildTree(0, nums.length-1)
+# };

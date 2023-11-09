@@ -84,3 +84,48 @@ class Solution:
     #     return False
 # @lc code=end
 
+# js
+# var hasPathSum = function (root, targetSum) {
+#     let ret = false
+
+#     function dfs(node, currentSum) {
+#         if (!node) return
+
+#         currentSum += node.val
+
+#         if (node.left || node.right) {
+#             dfs(node.left, currentSum)
+#             dfs(node.right, currentSum)
+#         } else {
+#             if (currentSum === targetSum) {
+#                 ret = true
+#                 return
+#             }
+#         }
+#     }
+
+
+#     dfs(root, 0)
+#     return ret
+
+# };
+
+
+# 简化版
+# var hasPathSum = function (root, targetSum) {
+
+#     function dfs(node, currentSum) {
+#         if (!node) return false
+#         currentSum += node.val
+
+#         if (!node.left && !node.right) {
+#             return currentSum === targetSum
+#         } else {
+#           return dfs(node.left, currentSum) || dfs(node.right, currentSum)
+#         }
+#     }
+
+
+#     return dfs(root, 0)
+
+# };
