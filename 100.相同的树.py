@@ -77,3 +77,43 @@ class Solution:
         
 # @lc code=end
 
+# js递归
+# var isSameTree = function(p, q) {
+#     if(!p && !q) return true
+
+#     if(p && q ){
+#         return  p.val=== q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
+#     }else{
+#         return false
+#     }
+
+# };
+
+
+# js非递归
+# var isSameTree = function (p, q) {
+#     let l = [p]
+#     let r = [q]
+#     while (l.length > 0) {
+#         let newL = []
+#         let newR = []
+#         for (let i = 0; i < l.length; i++) {
+#             if ((l[i] && !r[i]) || (r[i] && !l[i])) {
+#                 return false
+#             } else if (!r[i] && !l[i]) {
+#             } else if (l[i] && r[i]) {
+#                 if (l[i].val !== r[i].val) {
+#                     return false
+#                 } else {
+#                     newL.push(l[i].left)
+#                     newL.push(l[i].right)
+#                     newR.push(r[i].left)
+#                     newR.push(r[i].right)
+#                 }
+#             }
+#         }
+#         l = newL
+#         r = newR
+#     }
+#     return true
+# };

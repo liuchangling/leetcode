@@ -134,3 +134,56 @@ class Solution:
 
 # @lc code=end
 
+# js 非递归 + Bfs
+# var isSymmetric = function (root) {
+#     let queue = [root]
+#     while (queue.length > 0) {
+#         let temp = []
+#         let flag = false
+#         queue.forEach(q => {
+#             if (q) flag = true
+#             temp.push(q && q.left)
+#             temp.push(q && q.right)
+#         })
+
+
+#         // check
+#         for (let i = 0; i < temp.length / 2; i++) {
+#             let a = temp[i]
+#             let b = temp[temp.length - 1 - i]
+
+#             if (!a && !b) {
+#             } else if (a && b) {
+#                 if (a.val !== b.val) {
+#                     return false
+#                 }
+#             } else {
+#                 return false
+#             }
+#         }
+
+#         // BFS search
+#         if (flag) {
+#             queue = temp
+#         } else {
+#             // 全为空直接返回true
+#             return true
+#         }
+#     }
+
+#     return true
+
+# };
+
+# 递归借用一个辅助函数，代码很简单
+#  var isSymmetric = function (root) {
+   
+#     function check(left, right){
+#         if(!left && !right) return true
+#         if(!left || !right) return false
+
+#         return left.val === right.val && check(left.right, right.left) && check(left.left, right.right)
+#     }
+
+#     return check(root, root)
+# };

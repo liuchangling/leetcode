@@ -73,3 +73,30 @@ class Solution:
         
 # @lc code=end
 
+
+# js bfs
+# var maxDepth = function(root) {
+#     let queue = [root]
+#     let deep = 0
+
+#     while(queue.length>0){
+#         deep ++
+#         let temp = []
+#         queue.forEach(q=>{
+#             q && temp.push(q.left, q.right)
+#         })
+#         queue = temp
+#     }
+
+#     return deep
+# };
+
+# 递归简单点
+# var maxDepth = function (root) {
+#     if (!root) return 0
+#     if (!root.left && !root.right) return 1  #这一行不需要，速度更快
+
+#     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
+# };
+
+ 
