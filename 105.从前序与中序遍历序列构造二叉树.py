@@ -69,3 +69,51 @@ class Solution:
 
 # @lc code=end
 
+# js 
+# var buildTree = function (preorder, inorder) {
+#     if (preorder.length === 0) return null
+
+#     const root = new TreeNode(preorder[0])
+
+#     if (preorder.length === 1) return root
+
+#     const index = inorder.findIndex(i => i === root.val)
+#     const inLeft = inorder.slice(0, index)
+#     const inRight = inorder.slice(index + 1)
+#     const len = 1 + inLeft.length
+#     const preLeft = preorder.slice(1, len)
+#     const preRight = preorder.slice(len)
+#     root.left = buildTree(preLeft, inLeft)
+#     root.right = buildTree(preRight, inRight)
+
+#     return root
+# };
+
+
+# 提前转掉中序 会使得速度快很多
+
+# var buildTree = function (preorder, inorder) {
+#     const m = new Map()
+#     inorder.forEach((v, k) => {
+#         m.set(v, k)
+#     })
+
+#     function findTree(pL, pR, iL, iR) {
+#         if (pL > pR) return null
+
+#         const rootValue = preorder[pL]
+#         // console.log(pL, pR, iL, iR)
+#         let ans = new TreeNode(rootValue)
+#         // 根在中序遍历的下标
+#         const root = m.get(rootValue)
+#         const subLeftPR = pL + (root - iL)
+
+#         ans.left = findTree(pL+1, subLeftPR, iL, root-1)
+#         ans.right = findTree(subLeftPR+1, pR, root+1,iR)
+
+#         return ans
+#     }
+
+
+#     return findTree(0, preorder.length-1, 0, inorder.length -1)
+# };
