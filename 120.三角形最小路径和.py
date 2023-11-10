@@ -63,7 +63,6 @@ class Solution:
     #             else:
     #                 dp[i][j] = triangle[i][j] + min(dp[i-1][j], dp[i-1][j-1])
         
-    #     # print(dp)
     #     return min(dp[-1])
 
     # 内存优化后的dp 48ms 71%
@@ -86,7 +85,56 @@ class Solution:
                     tmp[j] = triangle[i][j] + min(dp[j], dp[j-1])
             dp = tmp
         
-        print(dp)
         return min(dp)
 # @lc code=end
 
+# /**
+#  * @param {number[][]} triangle
+#  * @return {number}
+#  */
+
+# // dp[i][j] 定义为 到这个未知的最小路径和
+# // 如果j = 0无需考虑j-1
+# // dp[i][j] = arr[i][j] + min(dp[i-1][j-1], dp[i-1][j])
+# // var minimumTotal = function (triangle) {
+
+# //     const len = triangle.length
+# //     dp = new Array(len)
+# //     dp[0] = new Array()
+# //     dp[0][0] = triangle[0][0]
+
+# //     for (let i = 1; i < len; i++) {
+# //         dp[i] = new Array()
+# //         dp[i][0] = triangle[i][0] + dp[i - 1][0]
+# //         for (let j = 1; j < i; j++) {
+# //             dp[i][j] = triangle[i][j] + Math.min(dp[i - 1][j - 1], dp[i - 1][j])
+# //         }
+# //         dp[i][i] = triangle[i][i] + dp[i-1][i-1]
+
+# //         // for (let j = 0; j <= i; j++) {
+# //         //     dp[i][j] = triangle[i][j] + Math.min(j > 0 ? dp[i - 1][j - 1] : Infinity, j < i ? dp[i - 1][j] : Infinity)
+# //         // }
+# //     }
+
+# //     return Math.min(...dp[len - 1])
+# // };
+
+
+
+# // var minimumTotal = function (triangle) {
+
+# //     const len = triangle.length
+# //     // 空间压缩
+# //     pre = new Array(len)
+# //     cur = new Array(len)
+# //     pre[0] = triangle[0][0]
+
+# //     for (let i = 1; i < len; i++) {
+# //         for (let j = 0; j <= i; j++) {
+# //             cur[j] = triangle[i][j] + Math.min(j > 0 ? pre[j - 1] : Infinity, j < i ? pre[j] : Infinity)
+# //         }
+# //         pre = cur.slice()
+# //     }
+
+# //     return Math.min(...pre)
+# // };

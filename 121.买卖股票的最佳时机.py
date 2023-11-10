@@ -58,3 +58,24 @@ class Solution:
 
 # @lc code=end
 
+
+# js
+# /**
+#  * @param {number[]} prices
+#  * @return {number}
+#  */
+# var maxProfit = function(prices) {
+#     let min = prices[0]
+#     let ret = 0
+
+#     for(let i = 1; i<prices.length; i++){
+#         if(prices[i] > min){
+#             ret = Math.max(prices[i] - min, ret)
+#         }else{
+#             min = prices[i]
+#         }
+#     }
+
+#     return ret
+
+# };
